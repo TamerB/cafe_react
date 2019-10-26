@@ -1,0 +1,78 @@
+form {
+  text-align: left;
+  width: 550px;
+}
+
+select, input {
+  background-color: #fff;
+  padding: 0 10px;
+}
+
+input {
+  height: 28px;
+  width: 380px !important;
+}
+
+select {
+  height: 35px;
+  width: 405px !important;
+}
+
+input, select, label .UploadFile {
+  margin: 12px 10px;
+}
+
+label, label div {
+  width: 120px;
+  font-size: 15px;
+  color: #555;
+}
+
+input, select, label, label div, label .UploadFile {
+  display: inline-block;
+  float: none;
+}
+
+.Container {
+  width: 100%;
+  text-align: center;
+}
+
+.Wrapper {
+  width: 1132px;
+  display: inline-block;
+}
+
+input, select {
+  width: 80%;
+}
+
+input[type=submit] {
+  width: 130px !important;
+}
+
+.UploadFile {
+  width: 150px !important;
+}
+input[type=submit], .UploadFile {
+  background-color: #3c85fe;
+  height: 50px;
+  color: #fff;
+  font-size: 15px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin: 40px 0;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.PhotoLabel {
+  width: 550px;
+}
+
+button.red {
+  background-color: red;
+}

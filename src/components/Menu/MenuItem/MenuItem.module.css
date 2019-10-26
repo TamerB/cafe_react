@@ -1,0 +1,52 @@
+.Card {
+  display: inline-block;
+  float: none;
+  width: 360px;
+  height: 300px;
+  margin: 15px 15px;
+  background-color: #fff;
+  box-shadow: 0 2px 2px rgba(0,0,0, 0.05);
+}
+
+.Card img {
+  height: 70%;
+  background-color: #43425c;
+  min-width: 100%;
+  min-height: 70%;
+  max-height: 70%;
+}
+
+.Card .Description {
+  height: 30%;
+}
+
+.Card .Description {
+  width: 100%;
+}
+
+.Card .Details {
+  text-align: left;
+  width: 75%;
+  line-height: 5px;
+}
+
+.Card .Price {
+  text-align: right;
+  width: 10%;
+  color: #999
+}
+
+.Details, .Price {
+  display: inline-table;
+  float: none;
+  height: 100%
+}
+
+.Description h5 {
+  font-weight: 700;
+  color: #777;
+}
+
+.Description h4 {
+  font-weight: 700;
+}

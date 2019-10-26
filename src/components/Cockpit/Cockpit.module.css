@@ -1,0 +1,42 @@
+.Container {
+  width: 100%;
+  text-align: center;
+}
+
+.Wrapper {
+  width: 1132px;
+  display: inline-block;
+}
+
+.Title, .AddButton {
+  display: inline-block;
+}
+.Title {
+  text-align: left;
+  margin-bottom: 30px;
+}
+
+.AddButton {
+  text-align: right;
+}
+
+.AddButton button {
+  text-decoration: none;
+  background-color: #3c85fe;
+  padding: 15px;
+  color: #fff;
+  font-size: 15px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.Title h2 {
+  font-weight: 400;
+  color: #777;
+}
+
+.Title, .AddButton {
+  width: 50%;
+  display: inline-block;
+}
