@@ -9,6 +9,7 @@ const menu = (props) => Object.keys(props.menu).map(function(key, value) {
     type={props.menu[key].type}
     price={props.menu[key].price}
     photo={props.menu[key].photo}
+    editItem={() => props.editItem (key)}
     removeItem={() => props.removeItem (key)} />
 });
 

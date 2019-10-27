@@ -14,6 +14,7 @@ const menuItem = (props) => {
       </div>
       <div className={classes.Price}>
         <p>${props.price}</p>
+        <button className={classes.edit} type="button" onClick={props.editItem}>Edit</button>
         <button className={classes.delete} type="button" onClick={props.removeItem}>Delete</button>
       </div>
     </div>

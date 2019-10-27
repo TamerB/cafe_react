@@ -9,6 +9,7 @@ function MenuForm (props) {
     event.preventDefault();
     inputFile.current.click();
     props.validatePhoto();
+    console.log(props.submitHandler);
   }
 
   return (

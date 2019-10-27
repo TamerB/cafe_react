@@ -9,7 +9,7 @@ import axios from '../../axios-orders';
 
 function MenuBuilder () {
   const [enteredMenu, setEnteredMenu] = useState({});
-  const [id, setid] = useState(0);
+  const [id, setid] = useState(null);
   const [type, settype] = useState('');
   const [name, setname] = useState('');
   const [price, setprice] = useState('');
@@ -19,6 +19,7 @@ function MenuBuilder () {
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [submitFunction, setSubmitFunction] = useState('addItem');
+  const [formFunction, setFormFunction] = useState('add')
 
   useEffect(() => {
     getMenu();
@@ -28,40 +29,62 @@ function MenuBuilder () {
     setLoading(true);
     axios.get('/menu_items.json/')
       .then(response => {
+        newItem();
         setEnteredMenu(response.data || {});
+        setErrorMessage('');
+        setSubmitFunction('addItem');
       })
       .catch(error => {
-        console.log(error);
         setErrorMessage('Something went wrong');
       });
       setLoading(false);
+      setErrorMessage('');
   }
 
   const removeItem = (key) => {
     setLoading(true);
-    axios.delete('/menu_items.json', { params: { id: key } })
+    axios.delete('/menu_items/' + key + '.json')
       .then(response => {
-        console.log(response);
         getMenu();
       })
       .catch(error => {
-        console.log(error);
         setErrorMessage('Something went wrong');
         setLoading(false);
       });
   }
 
-  const updateItem = (key) => {
+  const editItem = (key) => {
+    setid(key)
+    settype(enteredMenu[key].type);
+    setname(enteredMenu[key].name);
+    setprice(enteredMenu[key].price);
+    setphoto(enteredMenu[key].photo || '');
+    setphotoClass('blue');
+    setSubmitFunction('updateItem');
+    toggleFormHandler();
+  }
+
+  const updateItem = (submitted) => {
     setLoading(true);
-    axios.delete('/menu_items.json')
-      .then(response => {
-        getMenu();
-      })
-      .catch(error => {
-        console.log(error);
-        setErrorMessage('Something went wrong');
-        setLoading(false);
-      });
+    axios.put('/menu_items/' + id + '.json', submitted)
+    .then(response => {
+      setErrorMessage('');
+      toggleFormHandler();
+      getMenu();
+    })
+    .catch(error => {
+      setErrorMessage('Something went wrong');
+      setLoading(false);
+    });
+  }
+
+  const newItem = () => {
+    setid(null);
+    settype('');
+    setname('');
+    setprice('');
+    setphoto('');
+    setphotoClass('blue');
   }
 
   const addItem = (submitted) => {
@@ -70,16 +93,9 @@ function MenuBuilder () {
     .then(response => {
       setErrorMessage('');
       toggleFormHandler();
-      
-      getMenu();
-      settype('');
-      setname('');
-      setprice('');
-      setphoto('');
-      setphotoClass('blue');        
+      getMenu();     
     })
     .catch(error => {
-      console.log(error);
       setErrorMessage('Something went wrong');
       setLoading(false);
     });
@@ -104,6 +120,9 @@ function MenuBuilder () {
   const toggleFormHandler = () => {
     const doesShow = showMenu;
     setShowMenu(!doesShow);
+    if(!doesShow) {
+      eval(submitFunction)();
+    }
   }
 
   const changeFormValue = (event, tagType) => {
@@ -123,10 +142,10 @@ function MenuBuilder () {
       return <Spinner />;
     if (showMenu) {
       if (Object.keys(enteredMenu).length > 0)
-        return <Menu menu={enteredMenu} removeItem={(key) => removeItem(key)} />;
+        return <Menu menu={enteredMenu} removeItem={(key) => removeItem(key)} editItem={(key) => editItem(key)} />;
       return <p>This menu is empty.</p>;
     }
-    return <MenuForm formValues={{type: type, name: name, price: price, photo: [photo, photoClass]}} changed={(event, tagType) => changeFormValue(event, tagType)} validatePhoto={validatePhoto} submitHandler={submitHandler} />;
+    return <MenuForm formValues={{type: type, name: name, price: price, photo: [photo, photoClass]}} changed={(event, tagType) => changeFormValue(event, tagType)} validatePhoto={validatePhoto} submitHandler={submitHandler} formFunction={submitFunction} />;
   }
 
   return (
