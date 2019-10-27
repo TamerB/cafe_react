@@ -33,12 +33,11 @@ function MenuBuilder () {
         setEnteredMenu(response.data || {});
         setErrorMessage('');
         setSubmitFunction('addItem');
+        setLoading(false);
       })
       .catch(error => {
         setErrorMessage('Something went wrong');
       });
-      setLoading(false);
-      setErrorMessage('');
   }
 
   const removeItem = (key) => {

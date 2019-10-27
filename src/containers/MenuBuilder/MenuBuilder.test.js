@@ -18,9 +18,4 @@ describe("MenuBuilder", () => {
     const wrapper = shallow(<MenuBuilder />);
     expect(wrapper.find(Menu)).to.have.lengthOf(0);
   });
-  /*it("should render form", () => {
-    const wrapper = render(<MenuBuilder />);
-    wrapper.find('#toggle-display').props().onClick();
-    expect(wrapper.find(MenuForm)).to.have.lengthOf(1);
-  });*/
 });
