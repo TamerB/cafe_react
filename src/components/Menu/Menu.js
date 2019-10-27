@@ -8,7 +8,8 @@ const menu = (props) => Object.keys(props.menu).map(function(key, value) {
     name={props.menu[key].name} 
     type={props.menu[key].type}
     price={props.menu[key].price}
-    photo={props.menu[key].photo} />
+    photo={props.menu[key].photo}
+    removeItem={() => props.removeItem (key)} />
 });
 
 export default menu;

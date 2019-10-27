@@ -8,7 +8,7 @@ import Spinner from '../../components/Spinner/Spinner';
 import axios from '../../axios-orders';
 
 function MenuBuilder () {
-  const [enteredMenu, setEnteredMenu] = useState([]);
+  const [enteredMenu, setEnteredMenu] = useState({});
   const [id, setid] = useState(0);
   const [type, settype] = useState('');
   const [name, setname] = useState('');
@@ -18,6 +18,7 @@ function MenuBuilder () {
   const [showMenu, setShowMenu] = useState(true);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
+  const [submitFunction, setSubmitFunction] = useState('addItem');
 
   useEffect(() => {
     getMenu();
@@ -25,9 +26,9 @@ function MenuBuilder () {
 
   const getMenu = () => {
     setLoading(true);
-    axios.get('/menu_items.json')
+    axios.get('/menu_items.json/')
       .then(response => {
-        setEnteredMenu(response.data);
+        setEnteredMenu(response.data || {});
       })
       .catch(error => {
         console.log(error);
@@ -36,28 +37,59 @@ function MenuBuilder () {
       setLoading(false);
   }
 
-  const submitHandler = (event) => {
-    event.preventDefault();
-    let submitted = {type: type, name: name, price: price, photo: photo};
-    if (isValid(submitted)) {
-      setLoading(true);
-      axios.post('/menu_items.json', submitted)
+  const removeItem = (key) => {
+    setLoading(true);
+    axios.delete('/menu_items.json', { params: { id: key } })
       .then(response => {
-        setErrorMessage('');
-        toggleFormHandler();
-        
+        console.log(response);
         getMenu();
-        settype('');
-        setname('');
-        setprice('');
-        setphoto('');
-        setphotoClass('blue');        
       })
       .catch(error => {
         console.log(error);
         setErrorMessage('Something went wrong');
         setLoading(false);
       });
+  }
+
+  const updateItem = (key) => {
+    setLoading(true);
+    axios.delete('/menu_items.json')
+      .then(response => {
+        getMenu();
+      })
+      .catch(error => {
+        console.log(error);
+        setErrorMessage('Something went wrong');
+        setLoading(false);
+      });
+  }
+
+  const addItem = (submitted) => {
+    setLoading(true);
+    axios.post('/menu_items.json', submitted)
+    .then(response => {
+      setErrorMessage('');
+      toggleFormHandler();
+      
+      getMenu();
+      settype('');
+      setname('');
+      setprice('');
+      setphoto('');
+      setphotoClass('blue');        
+    })
+    .catch(error => {
+      console.log(error);
+      setErrorMessage('Something went wrong');
+      setLoading(false);
+    });
+  }
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+    let submitted = {type: type, name: name, price: price, photo: photo};
+    if (isValid(submitted)) {
+      eval(submitFunction)(submitted);
     }
   }
 
@@ -90,8 +122,8 @@ function MenuBuilder () {
     if (loading)
       return <Spinner />;
     if (showMenu) {
-      if (!(Object.entries(enteredMenu).length === 0 && enteredMenu.constructor === Object))
-        return <Menu menu={enteredMenu} />;
+      if (Object.keys(enteredMenu).length > 0)
+        return <Menu menu={enteredMenu} removeItem={(key) => removeItem(key)} />;
       return <p>This menu is empty.</p>;
     }
     return <MenuForm formValues={{type: type, name: name, price: price, photo: [photo, photoClass]}} changed={(event, tagType) => changeFormValue(event, tagType)} validatePhoto={validatePhoto} submitHandler={submitHandler} />;
