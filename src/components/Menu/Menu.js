@@ -2,13 +2,13 @@ import React from 'react';
 
 import MenuItem from './MenuItem/MenuItem'
 
-const menu = (props) => props.menu.map((item, index) => {
-            return <MenuItem
-              key={item.id}
-              name={item.name} 
-              type={item.type}
-              price={item.price}
-              photo={item.photo} />
-          });
+const menu = (props) => Object.keys(props.menu).map(function(key, value) {
+  return <MenuItem
+    key={key}
+    name={props.menu[key].name} 
+    type={props.menu[key].type}
+    price={props.menu[key].price}
+    photo={props.menu[key].photo} />
+});
 
 export default menu;

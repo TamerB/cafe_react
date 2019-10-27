@@ -8,16 +8,20 @@
   display: inline-block;
 }
 
-.Title, .AddButton {
+.Title, .AddButton, .error {
   display: inline-block;
 }
-.Title {
+.Title, .error {
   text-align: left;
   margin-bottom: 30px;
 }
 
 .AddButton {
   text-align: right;
+}
+
+.error {
+  color: red;
 }
 
 .AddButton button {
@@ -39,4 +43,8 @@
 .Title, .AddButton {
   width: 50%;
   display: inline-block;
+}
+
+.error {
+  width: 100%;
 }

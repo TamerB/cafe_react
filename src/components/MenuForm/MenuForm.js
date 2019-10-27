@@ -28,7 +28,7 @@ function MenuForm (props) {
           <label htmlFor="photo-upload" className={classes.PhotoLabel}><div>Photo</div>
             <button type="file" className={classes.UploadFile + ' ' + classes[props.formValues.photo[1]]} onClick={onButtonClick}>Choose Photo</button>
           </label>
-          <input name="photo" id="photoUpload" ref={inputFile} type="file" value={props.formValues.photo[0]} onChange={(event) => props.changed(event, 'photo') } required  />
+          <input name="photo" id="photoUpload" ref={inputFile} type="file" onChange={(event) => props.changed(event, 'photo') } required  />
           <input type="submit" onClick={props.validatePhoto} value="Save Item" />
         </form>
       </div>

@@ -15,6 +15,9 @@ const cockpit = (props) => {
             {props.showButton ? <button id="toggle-display" className={classes.Button} onClick={props.clicked}>Add menu item</button> : null}
           </div>
         </div>
+        {props.errorMessage ? <div className={classes.Wrapper}>
+          <p className={classes.error}>{props.errorMessage}</p>
+        </div>: null}
       </div>
     </Aux>
   );

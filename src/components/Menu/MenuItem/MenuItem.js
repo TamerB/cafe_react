@@ -6,7 +6,7 @@ import classes from './MenuItem.module.css'
 
 const menuItem = (props) => {
   let item = <div className={classes.Card}>
-    <img src={props.photo}></img>
+    <img></img>
     <div className={classes.Description}>
       <div className={classes.Details}>
         <h5>{props.type}</h5>
