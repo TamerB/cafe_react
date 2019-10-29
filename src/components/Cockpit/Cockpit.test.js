@@ -20,6 +20,6 @@ describe("Cockpit", () => {
     const wrapper = shallow(<Cockpit />);
     wrapper.setProps({showButton: false});
     expect(wrapper.find('h2').text()).to.equal('Add menu item');
-    expect(wrapper.find('#toggle-display')).to.have.lengthOf(0);
+    expect(wrapper.find('#toggle-display').text()).to.equal('Go Back');
   });
 });

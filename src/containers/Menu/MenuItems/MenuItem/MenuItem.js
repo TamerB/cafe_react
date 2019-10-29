@@ -23,11 +23,4 @@ const menuItem = (props) => {
   return item;
 };
 
-menuItem.propTypes = {
-  type: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  photo: PropTypes.string.isRequired
-}
-
 export default menuItem; 
