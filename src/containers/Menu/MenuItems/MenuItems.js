@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import axios from '../../../axios-orders';
-import MenuItem from './MenuItem/MenuItem';
+import MenuItem from '../../../components/MenuItem/MenuItem';
 import Spinner from '../../../components/Spinner/Spinner';
 
 
