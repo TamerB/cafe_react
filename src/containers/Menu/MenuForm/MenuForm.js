@@ -95,7 +95,7 @@ function MenuForm (props) {
   }
 
   const validatePhoto = () => {
-    setphotoClass(photo === undefined || photo[0].name === undefined ||photo[0].name === '' ? 'red' : 'blue');
+    setphotoClass(photo === undefined  || photo[0] === undefined || photo[0].name === undefined ||photo[0].name === '' ? 'red' : 'blue');
   }
 
   const isValid = (temp) => {

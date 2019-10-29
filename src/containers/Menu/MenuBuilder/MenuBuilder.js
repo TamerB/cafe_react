@@ -18,9 +18,9 @@ function MenuBuilder () {
       <Aux>
         <Cockpit showButton={showMenu} errorMessage={errorMessage} />
         <Switch>
-          <Route path="/" exact render={() => <MenuItems setErrorMessage={(msg) => setErrorMessage(msg)} showAddButton={setShowMenu} />} />
           <Route path="/new" exact render={() => <MenuForm setErrorMessage={(msg) => setErrorMessage(msg)}  id='' showAddButton={setShowMenu} submitFunction='addItem' />} />
           <Route path="/edit/:id" exact render={() => <MenuForm setErrorMessage={(msg) => setErrorMessage(msg)}  id='' showAddButton={setShowMenu} submitFunction='updateItem' />} />
+          <Route render={() => <MenuItems setErrorMessage={(msg) => setErrorMessage(msg)} showAddButton={setShowMenu} />} />
         </Switch>
       </Aux>
     );
