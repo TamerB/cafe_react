@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import classes from './Cockpit.module.css';
 import Aux from '../../hoc/Aux';
@@ -12,7 +13,7 @@ const cockpit = (props) => {
             <h2>{props.showButton ? 'Menu' : 'Add menu item'}</h2>
           </div>
           <div className={classes.AddButton}>
-            {props.showButton ? <button id="toggle-display" className={classes.Button} onClick={props.clicked}>Add menu item</button> : null}
+            {props.showButton ? <Link id="toggle-display" to="/new" className={classes.Button}>Add menu item</Link> : <Link id="toggle-display" to="/" className={classes.Button}>Go Back</Link>}
           </div>
         </div>
         {props.errorMessage ? <div className={classes.Wrapper}>

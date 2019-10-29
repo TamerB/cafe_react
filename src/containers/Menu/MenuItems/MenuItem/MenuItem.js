@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { Link } from 'react-router-dom';
 
 import classes from './MenuItem.module.css'
 
@@ -14,7 +14,7 @@ const menuItem = (props) => {
       </div>
       <div className={classes.Price}>
         <p>${props.price}</p>
-        <button className={classes.edit} type="button" onClick={props.editItem}>Edit</button>
+        <Link id="toggle-display" to={'/edit/' + props.id} className={classes.edit}>Edit</Link>
         <button className={classes.delete} type="button" onClick={props.removeItem}>Delete</button>
       </div>
     </div>

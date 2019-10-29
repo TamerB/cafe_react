@@ -54,7 +54,6 @@
 .edit, .delete {
   display: inline-block;
   float: none;
-  padding: 5px;
   color: #fff;
   border: none;
   border-radius: 3px;
@@ -64,9 +63,14 @@
 }
 
 .delete {
+  padding: 5px;
   background-color: #ff0000d4;
 }
 
 .edit {
+  text-decoration: none;
   background-color: #555;
+  text-align: center;
+  padding: 5px 1px;
+  font-size: 13px;
 }
