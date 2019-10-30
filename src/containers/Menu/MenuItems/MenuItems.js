@@ -20,7 +20,6 @@ const MenuItems = (props) => {
     axios.get('/menu_items.json/')
       .then(response => {
         //newItem();
-        console.log(loading);
         setEnteredMenu(response.data || {});
         props.setErrorMessage('');
         //setSubmitFunction('addItem');

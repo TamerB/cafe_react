@@ -11,7 +11,8 @@ function MenuForm (props) {
   const [type, settype] = useState('');
   const [name, setname] = useState('');
   const [price, setprice] = useState('');
-  const [photo, setphoto] = useState('');
+  const [photo, setphoto] = useState(null);
+  const [photoLocation, setPhotoLocation] = useState(null);
   const [photoClass, setphotoClass] = useState('blue');
   const [loading, setLoading] = useState(true);
 
@@ -46,10 +47,10 @@ function MenuForm (props) {
       setname(values.name);
       setprice(values.price);
       setphoto(values.photo);
+      setPhotoLocation(values.photoLocation);
       setphotoClass('blue');
     }
   }
-
 
   const updateItem = (submitted) => {
     setLoading(true);
@@ -70,11 +71,39 @@ function MenuForm (props) {
     setname('');
     setprice('');
     setphoto('');
+    setPhotoLocation('');
     setphotoClass('blue');
   }
 
-  const addItem = (submitted) => {
-    setLoading(true);
+  const uploadImage = (submitted) => {
+    let data = new FormData();
+    data.append( 'file', photo, photo.name );
+    axios.post('http://localhost:3001/upload', data, {
+      headers: {
+          'accept': 'application/json',
+          'Accept-Language': 'en-US,en;q=0.8',
+        }
+    })
+    .then(response => {
+      if ( 200 === response.status ) {
+            if( response.data.error ) {
+              props.setErrorMessage('Something went wrong');
+            } else {
+              let fileName = response;
+              setPhotoLocation(response.data.location);
+              submitted.photo = response.data.location;
+              addItemData(submitted)
+            }
+          }
+          setLoading(false);
+    })
+    .catch(error => {
+      props.setErrorMessage('Something went wrong');
+      setLoading(false);
+    });
+  }
+
+  const addItemData = (submitted) => {
     axios.post('/menu_items.json', submitted)
     .then(response => {
       props.setErrorMessage('');
@@ -86,16 +115,21 @@ function MenuForm (props) {
     });
   }
 
+  const addItem = (submitted) => {
+    setLoading(true);
+    uploadImage(submitted);
+  }
+
   const submitHandler = (event) => {
     event.preventDefault();
-    let submitted = {type: type, name: name, price: price, photo: photo[0].name};
+    let submitted = {type: type, name: name, price: price};
     if (isValid(submitted)) {
       eval(props.submitFunction)(submitted);
     }
   }
 
   const validatePhoto = () => {
-    setphotoClass(photo === undefined || photo[0].name === undefined ||photo[0].name === '' ? 'red' : 'blue');
+    setphotoClass(photo === undefined || photo.name === '' ? 'red' : 'blue');
   }
 
   const isValid = (temp) => {
@@ -110,13 +144,11 @@ function MenuForm (props) {
 
   const changeFormValue = (event, tagType) => {
     if (tagType === 'photo') {
-      let temp = /[png|PNG|jpg|JPG|jpeg|JPEG]$/.test(event.target.files[0].name) ? event.target.file[0] : '';
+      let temp = /[png|PNG|jpg|JPG|jpeg|JPEG]$/.test(event.target.files[0].name) ? event.target.files[0] : '';
       setphoto(temp);
-      setphotoClass(event.target.value === '' ? 'red' : 'blue');
-    } else if (tagType === 'price') {
-      setprice(Number(event.target.value) || '');
+      setphotoClass(temp === '' ? 'red' : 'blue');
     } else {
-      eval('set' + tagType)(event.target.value);
+      setprice(Number(event.target.value) || '');
     }
   }
 
@@ -133,11 +165,11 @@ function MenuForm (props) {
           <label>Name</label>
           <input name="name" type="text" value={name} onChange={(event) => setname(event.target.value) } required />
           <label>Price</label>
-          <input name="price" type="text" value={price} onChange={(event) => setprice(Number(event.target.value))} required />
+          <input name="price" type="text" value={price} onChange={(event) => changeFormValue(event, 'price')} required />
           <label htmlFor="photo-upload" className={classes.PhotoLabel}><div>Photo</div>
             <button type="file" className={classes.UploadFile + ' ' + classes[photoClass]} onClick={onButtonClick}>Choose Photo</button>
           </label>
-          <input name="photo" id="photoUpload" ref={inputFile} type="file" onChange={(event) => setphoto(event.target.files) } required  />
+          <input name="photo" id="photoUpload" ref={inputFile} type="file" onChange={(event) => changeFormValue(event, 'photo') } required  />
           <input type="submit" onClick={validatePhoto} value="Save Item" />
         </form>
       </div>
