@@ -10,6 +10,10 @@ Branch `saving_data` is communicating with Firebase. So you need to setup a live
 
 In the project directory, you can run:
 
+### `npm install`
+
+To install dependencies
+
 ### `npm start`
 
 Runs the app in the development mode.<br />
